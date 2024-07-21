@@ -1,3 +1,4 @@
+//Leer configruaciones del WIFI
 bool settingsReadWifi(){
   StaticJsonDocument<500> jsonConfig;
   File file=SPIFFS.open("/SettingConfigWifi.json","r");
@@ -29,4 +30,46 @@ bool settingsReadWifi(){
     log("info: Lectura configuracion de WiFi correct");
     return true;
   }
+}
+//Leer configuraciones del MQTT
+bool settingsReadMQTT(){
+  StaticJsonDocument<500>jsonConfig;
+  File file=SPIFFS.open(F("/settingsMQTT.json"),"r");
+  if (deserializeJson(jsonConfig,file))
+  {
+    settingsResetMQTT();
+    log(F("Error: fallo la lectura de la configuracion MQTT,tomando valores por defecto"));
+    return false;
+  }
+  else{
+    strlcpy(mqtt_user,jsonConfig["mqtt_user"],sizeof(mqtt_user));
+    strlcpy(mqtt_passw,jsonConfig["mqtt_passw"],sizeof(mqtt_passw));
+    strlcpy(mqtt_server,jsonConfig["mqtt_server"],sizeof(mqtt_server));
+    strlcpy(mqtt_id,jsonConfig["mqtt_id"],sizeof(mqtt_id));
+    mqtt_time =jsonConfig["mqtt_time"];
+    mqtt_port=jsonConfig["mqtt_port"];
+    mqtt_enabled=jsonConfig["mqtt_enabled"];
+    file.close();
+    log("Info: Lectura de configuracion MQTT correcta");
+    return true;
+  }
+  
+}
+//Leer estados de los Relays
+bool settingsReadRelay(){
+   StaticJsonDocument<500>jsonConfig;
+  File file=SPIFFS.open(F("/settingsRelay.json"),"r");
+  if (deserializeJson(jsonConfig,file))
+  {
+    settingsResetRelay();
+    log(F("Error: fallo la lectura de la configuracion de los Relay,tomando valores por defecto"));
+    return false;
+  }else{
+    Relay01_status=jsonConfig["Relay01_status"];
+    Relay02_status=jsonConfig["Relay02_status"];
+    file.close();
+    log("Info:Lectura de los Relays correcta");
+    return true;
+  }
+
 }

@@ -52,3 +52,11 @@ void setOnSingle(int _pin){
 void setOffSingle(int _pin){
   digitalWrite(_pin,LOW);
 }
+void setOnOffSingle(int _pin,bool status){
+  if(status){
+    digitalWrite(_pin,HIGH);
+  }else{
+    digitalWrite(_pin,LOW);
+  }
+
+}

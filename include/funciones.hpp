@@ -1,4 +1,13 @@
 #include "LedBlink.hpp"
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+    uint8_t temprature_sens_read();
+#ifdef __cplusplus
+}
+#endif
+uint8_t temprature_sens_read();
 void log(String s){
   Serial.println(s);
 }
@@ -48,4 +57,38 @@ void settingPines(){
   digitalWrite(RELAY2,LOW);
   digitalWrite(WIFILED,LOW);
   digitalWrite(MQTTLED,LOW);
+}
+//Blink para transmicion MQTT
+void mqttTX(){
+  for(int i=0;i<2;i++){
+    setOnSingle(MQTTLED);
+    delay(50);
+    setOffSingle(MQTTLED);
+    delay(10);
+  }
+}
+//Blink Resepcion MQTT
+void mqttRX(){
+for (int i = 0; i < 1; i++)
+  {
+    blinkRandomSingle(5,50,MQTTLED);
+    delay(5);
+  }
+
+}
+//Calidad del WIFI
+int getRSSIasQuality(int RSSI){
+  int quality =0;
+  if(RSSI<=-100){
+    quality=0;
+  }else if(RSSI>=-50){
+    quality=100;
+  }else{
+    quality=2*(RSSI+100);
+  }
+  return quality;
+}
+//Temperatura del CPU
+float TempCPUValue(){
+  return TempCPU=(temprature_sens_read()-32)/1.8;
 }

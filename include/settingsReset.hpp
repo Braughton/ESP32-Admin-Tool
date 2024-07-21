@@ -1,3 +1,5 @@
+//Valores por defecto
+//Wifi
 void settingResetWiFi (){
       //General
     strlcpy(id,"adminesp32",sizeof(id));
@@ -18,4 +20,19 @@ void settingResetWiFi (){
     ap_canalap = 9;
     ap_hiddenap = false;
     ap_connetap = 4;
+}
+//MQTT
+void settingsResetMQTT(){
+  strlcpy(mqtt_user,"cuba_iot",sizeof(mqtt_user));
+  strlcpy(mqtt_passw,"cuba_iot",sizeof(mqtt_passw));
+  strlcpy(mqtt_server,"cubaelectronica.com",sizeof(mqtt_server));
+  strlcpy(mqtt_id,deviceID().c_str(),sizeof(mqtt_id));
+  mqtt_time=6000;
+  mqtt_port=1883;
+  mqtt_enabled=true;
+}
+//Relay
+void settingsResetRelay(){
+  Relay01_status=LOW;
+  Relay02_status=LOW;
 }

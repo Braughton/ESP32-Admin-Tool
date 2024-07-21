@@ -6,10 +6,9 @@ DNSServer dnsServer;
 IPAddress apIP(192,168,4,1);
 IPAddress netMsk(255,255,255,0);
 int wifi_mode = WIFI_STA;
-const char *esp_hostname=id;
 unsigned long previousMillisWIFI=0;
 unsigned long intervalWIFI=30000; 
-
+const char *esp_hostname=id;
 
 void startAP(){
   log("Info: Iniciando Modo AP");
